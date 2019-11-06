@@ -15,7 +15,7 @@
 			}
 		},
 		onLoad() {
-			console.log(config)
+			console.log(feConfig)
 		},
 		methods: {
 
