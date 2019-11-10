@@ -2,7 +2,7 @@
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
 		<view>
-			<text class="title">{{title}}</text>
+			<text class="title">{{ title }}</text>
 		</view>
 	</view>
 </template>
@@ -12,15 +12,15 @@
 		data() {
 			return {
 				title: 'Hello'
-			}
+			};
 		},
 		onLoad() {
-			console.log(feConfig)
+			console.log(feConfig);
 		},
 		methods: {
 
 		}
-	}
+	};
 </script>
 
 <style lang="scss">
