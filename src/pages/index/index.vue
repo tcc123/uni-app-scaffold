@@ -16,6 +16,14 @@
 		},
 		onLoad() {
 			console.log(feConfig);
+			this.$http.request({
+				url: '/demo/code',
+				method: 'post'
+			}).then(res => {
+				// console.log(res);
+			}).catch(err => {
+				console.log(err);
+			});
 		},
 		methods: {
 
