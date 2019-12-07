@@ -95,7 +95,7 @@ const composeURL = function(baseURL, relativeURL) {
  * @return {Boolean}
  */
 const isAbsoluteURL = function(url) {
-    return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+    return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url); // eslint-disable-line
 };
 
 /**

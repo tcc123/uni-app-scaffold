@@ -13,7 +13,7 @@ export const globalInterceptor = {
  * `header` 中`content-type`设置特殊参数 或 配置其他会导致触发 跨域 问题，出现跨域会直接进入响应拦截器的catch函数中
  */
 export const config = {
-  baseURL: "https://www.fastmock.site/mock/b0e7c0fd4d0c17abe3d7bda7f9be5104",
+  baseURL: feConfig.api,
   header: {
     // 'X-Auth-Token': 'xxxx',
     contentType: "application/x-www-form-urlencoded"
@@ -33,12 +33,11 @@ export const config = {
  */
 globalInterceptor.request.use(
   config => {
-    console.log("is global request interceptor");
-
+    getToken() && (config.header.token = getToken());
     return config;
   },
   err => {
-    console.error("is global fail request interceptor: ", err);
+    showToast(err);
     return false;
   }
 );
@@ -56,14 +55,88 @@ globalInterceptor.request.use(
  * @return {Object|Boolean|Promise<reject>}
  */
 globalInterceptor.response.use(
-  (res, config) => {
-    return res;
+  async(res, config) => {
+    let data = res.data || res.Data;
+    let code = data.code || data.Code;
+    try {
+      return await handleCode({ data, code, config });
+    } catch (err) {
+      return Promise.reject(err);
+    }
   },
-  (err, config) => {
-    console.error("is global response fail interceptor");
-    console.error("err: ", err);
-    console.error("config: ", config);
-
+  (err) => {
+    showToast(err);
     return Promise.reject(err);
   }
 );
+
+/**
+ * 重新请求更新获取 `token`
+ * @param {number} uid
+ * @return {Promise}
+ */
+function getApiToken() {
+  // return TokenApi.getMockToken().then((res) => {
+    // return res.token;
+  // });
+}
+
+/**
+ * 获取 `localStorage` 中的 `token`
+ * @return {string} token字符串
+ */
+function getToken() {
+  return uni.getStorageSync('token');
+}
+
+/**
+ * 保存 `token` 到  `localStorage`
+ * @param {string} token token字符串
+ * @return {void}
+ */
+function saveToken(token) {
+  uni.setStorageSync('token', token);
+}
+
+/**
+ * 处理 http状态码
+ * @param {object} o
+ * @param {object} o.data 请求返回的数据
+ * @param {object} o.config 本次请求的config数据
+ * @param {string|number} o.code http状态码
+ * @return {object|Promise<reject>}
+ */
+function handleCode({ data, code, config }) {
+  const STATUS = {
+    '0'() { // 请求成功
+      return data;
+    },
+    '1000'() { // token过期，重新获取token
+      // 只让这个实例发送一次请求，如果code还是1000则抛出错误
+      if (config.count === 1) {
+        return Promise.reject({ code, msg: '请求未授权' });
+      }
+      config.count++; // count字段自增，可以用来判断请求次数，避免多次发送重复的请求
+      config.url = config.instanceURL; // 重置 config的相对地址，避免 `params` 多次添加
+      return getApiToken().then(saveToken).then(() => Request().request(config));
+    },
+    '1101'() { // cookie过期，跳转到登录页面
+      return Promise.reject({ code, msg: '拒绝请求' });
+    }
+  };
+
+  return STATUS[code] ? STATUS[code]() : Promise.reject(data, config); // 有状态码但不在这个封装的配置里，就直接进入 `fail`
+}
+
+/** 
+  * 显示消息提示框
+  * @param {String} msg 
+  * @return {void}
+*/
+function showToast(msg) {
+  uni.showToast({
+      title: JSON.stringify(msg),
+      icon: 'none',
+      duration: 2000
+  });
+}

@@ -131,7 +131,7 @@ MyRequest.prototype.request = function(config = {}) {
 MyRequest.prototype.abort = function(instance) {
     try {
         instance.example.abort();
-    } catch (e) {}
+    } catch (e) {} // eslint-disable-line
 };
 
 export default MyRequest;
