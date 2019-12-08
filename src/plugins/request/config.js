@@ -1,5 +1,6 @@
 import Interceptor from "./core/interceptor";
 import Request from "./index";
+import Token from '../../utils/token.js';
 
 export const globalInterceptor = {
   request: new Interceptor(),
@@ -34,6 +35,7 @@ export const config = {
 globalInterceptor.request.use(
   config => {
     getToken() && (config.header.token = getToken());
+    getCookie() && (config.header.cookie = getCookie());
     return config;
   },
   err => {
@@ -58,6 +60,7 @@ globalInterceptor.response.use(
   async(res, config) => {
     let data = res.data || res.Data;
     let code = data.code || data.Code;
+    saveCookie(res.header['set-cookie'] || res.header['Set-Cookie']);
     try {
       return await handleCode({ data, code, config });
     } catch (err) {
@@ -72,13 +75,12 @@ globalInterceptor.response.use(
 
 /**
  * 重新请求更新获取 `token`
- * @param {number} uid
  * @return {Promise}
  */
 function getApiToken() {
-  // return TokenApi.getMockToken().then((res) => {
-    // return res.token;
-  // });
+  return Token.getToken().then((res) => {
+    return res.token;
+  });
 }
 
 /**
@@ -96,6 +98,23 @@ function getToken() {
  */
 function saveToken(token) {
   uni.setStorageSync('token', token);
+}
+
+/**
+ * 获取 `localStorage` 中的 `cookie`
+ * @return {string} cookie字符串
+ */
+function getCookie() {
+  return uni.getStorageSync('cookie');
+}
+
+/**
+ * 保存 `cookie` 到  `localStorage`
+ * @param {string} cookie cookie字符串
+ * @return {void}
+ */
+function saveCookie(cookie) {
+  cookie ? uni.setStorageSync('cookie', cookie) : '';
 }
 
 /**
@@ -121,7 +140,8 @@ function handleCode({ data, code, config }) {
       return getApiToken().then(saveToken).then(() => Request().request(config));
     },
     '1101'() { // cookie过期，跳转到登录页面
-      return Promise.reject({ code, msg: '拒绝请求' });
+      uni.reLaunch({ url: feConfig.login });
+      return Promise.reject({ code, msg: '登录过期' });
     }
   };
 
