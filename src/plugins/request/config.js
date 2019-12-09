@@ -17,8 +17,8 @@ export const config = {
   baseURL: feConfig.api,
   header: {
     // 'X-Auth-Token': 'xxxx',
-    contentType: "application/x-www-form-urlencoded"
-    // 'Content-Type': 'application/json'
+    // contentType: "application/x-www-form-urlencoded"
+    'Content-Type': 'application/json'
   }
 };
 
@@ -58,8 +58,8 @@ globalInterceptor.request.use(
  */
 globalInterceptor.response.use(
   async(res, config) => {
-    let data = res.data || res.Data;
-    let code = data.code || data.Code;
+    let data = res.hasOwnProperty('data') ? res.data : res.hasOwnProperty('Data') ? res.Data : null; // eslint-disable-line
+    let code = data.hasOwnProperty('code') ? data.code : data.hasOwnProperty('Code') ? data.Code : null; // eslint-disable-line
     saveCookie(res.header['set-cookie'] || res.header['Set-Cookie']);
     try {
       return await handleCode({ data, code, config });

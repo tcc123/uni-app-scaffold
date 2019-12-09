@@ -17,10 +17,14 @@
 		onLoad() {
 			console.log(feConfig);
 			this.$http.request({
-				url: '/demo/code',
-				method: 'post'
+				url: '/v1/users/sessions',
+				method: 'post',
+				data: {
+					username: 'muyi',
+          password: '123456'
+				}
 			}).then(res => {
-				// console.log(res);
+				console.log(res);
 			}).catch(err => {
 				console.log(err);
 			});

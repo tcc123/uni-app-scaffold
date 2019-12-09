@@ -1,3 +1,7 @@
 module.exports = {
-  api: 'test'
+  api: 'https://testhfsfd-teacher.haofenshu.com',
+  token: '',
+  appid: '',
+  client_base64: '',
+  login: ''
 };
