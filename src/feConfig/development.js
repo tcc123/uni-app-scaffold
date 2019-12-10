@@ -1,5 +1,5 @@
 module.exports = {
-  api: 'https://testhfsfd-teacher.haofenshu.com',
+  api: '',
   token: '',
   appid: '',
   client_base64: '',

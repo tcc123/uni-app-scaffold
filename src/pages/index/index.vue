@@ -25,6 +25,15 @@
 				}
 			}).then(res => {
 				console.log(res);
+				this.$http.request({
+				url: '/v1/homework/list',
+				method: 'get',
+				data: {
+					homeworkStatus: 1
+				}
+			}).then(res => {
+				console.log(res);
+			});
 			}).catch(err => {
 				console.log(err);
 			});
