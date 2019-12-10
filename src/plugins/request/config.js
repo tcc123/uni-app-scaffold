@@ -14,7 +14,7 @@ export const globalInterceptor = {
  * `header` 中`content-type`设置特殊参数 或 配置其他会导致触发 跨域 问题，出现跨域会直接进入响应拦截器的catch函数中
  */
 export const config = {
-  baseURL: feConfig.api,
+  baseURL: feConfig.api.base,
   header: {
     // 'X-Auth-Token': 'xxxx',
     // contentType: "application/x-www-form-urlencoded"

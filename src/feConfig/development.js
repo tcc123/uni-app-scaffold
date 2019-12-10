@@ -1,5 +1,7 @@
 module.exports = {
-  api: '',
+  api: {
+    base: 'http://devfudaojs.haofenshu.com:8080'
+  },
   token: '',
   appid: '',
   client_base64: '',
