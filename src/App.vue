@@ -13,5 +13,56 @@
 </script>
 
 <style>
-	/*每个页面公共css */
+/*每个页面公共css */
+page {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+image {
+  display: block;
+}
+view {
+  box-sizing: border-box;
+}
+button::after {
+  border: none;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+ /* 公用样式 */
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.flex-row-start {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/*单行溢出*/
+.one-txt-cut {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/*多行溢出*/
+.txt-cut {
+  overflow : hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+}
 </style>
