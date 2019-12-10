@@ -52,7 +52,6 @@
 		.logo {
 			height: 200upx;
 			width: 200upx;
-			margin-top: 200upx;
 		}
 		.title {
 			font-size: 36upx;
