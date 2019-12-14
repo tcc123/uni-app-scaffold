@@ -16,7 +16,9 @@ module.exports = {
   globals: {
     Vue: true,
     uni: true,
-    feConfig: true
+    feConfig: true,
+    Util: true,
+    Enums: true
   },
   // add your custom rules here
   rules: {

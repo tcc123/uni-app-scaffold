@@ -1,6 +1,6 @@
 module.exports = {
   api: {
-    base: 'http://devfudaojs.haofenshu.com:8080'
+    base: 'http://yapi.iyunxiao.com/mock/451'
   },
   token: '',
   appid: '',

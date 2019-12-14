@@ -34,12 +34,14 @@ export const config = {
  */
 globalInterceptor.request.use(
   config => {
+    uni.showLoading({ title: '加载中' });
     getToken() && (config.header.token = getToken());
     getCookie() && (config.header.cookie = getCookie());
     return config;
   },
   err => {
     showToast(err);
+    uni.hideLoading();
     return false;
   }
 );
@@ -64,11 +66,13 @@ globalInterceptor.response.use(
     try {
       return await handleCode({ data, code, config });
     } catch (err) {
+      uni.hideLoading();
       return Promise.reject(err);
     }
   },
   (err) => {
     showToast(err);
+    uni.hideLoading();
     return Promise.reject(err);
   }
 );
@@ -144,7 +148,7 @@ function handleCode({ data, code, config }) {
       return Promise.reject({ code, msg: '登录过期' });
     }
   };
-
+  uni.hideLoading();
   return STATUS[code] ? STATUS[code]() : Promise.reject(data, config); // 有状态码但不在这个封装的配置里，就直接进入 `fail`
 }
 

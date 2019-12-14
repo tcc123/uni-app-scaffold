@@ -14,7 +14,7 @@
     "dev:mp-toutiao": "cross-env CONFIG_ENV=development NODE_ENV=development UNI_PLATFORM=mp-toutiao vue-cli-service uni-build --watch",
     "dev:app-plus": "cross-env CONFIG_ENV=development NODE_ENV=development UNI_PLATFORM=app-plus vue-cli-service uni-build --watch",
     "dev:custom": "cross-env CONFIG_ENV=development NODE_ENV=development uniapp-cli custom",
-    "test:h5": "CONFIG_ENV=test NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build",
+    "test:h5": "cross-env CONFIG_ENV=test NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build",
     "test:mp-qq": "cross-env CONFIG_ENV=test NODE_ENV=production UNI_PLATFORM=mp-qq vue-cli-service uni-build",
     "test:mp-weixin": "cross-env CONFIG_ENV=test NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
     "test:mp-baidu": "cross-env CONFIG_ENV=test NODE_ENV=production UNI_PLATFORM=mp-baidu vue-cli-service uni-build",
@@ -44,7 +44,7 @@
     "@dcloudio/uni-stat": "^2.0.0-24220191115006",
     "flyio": "^0.6.2",
     "regenerator-runtime": "^0.12.1",
-    "vue": "^2.6.10",
+    "vue": "2.6.10",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
@@ -62,6 +62,7 @@
     "@vue/cli-service": "^3.0.3",
     "babel-eslint": "^10.0.3",
     "babel-plugin-import": "^1.13.0",
+    "cross-env": "^6.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.0.1",
     "mini-types": "0.0.5",

@@ -5,12 +5,12 @@ const configEnv = process.env.CONFIG_ENV;
 
 module.exports = {
   devServer: {
-    host: 'devfudaojs.haofenshu.com',
+    host: '0.0.0.0',
     port: 8080,
     open: true,
     proxy: {
-      '/v1': {
-        target: 'http://testhfsfd-teacher.haofenshu.com',
+      '/demo': {
+        target: 'http://yapi.iyunxiao.com/mock/451',
         changeOrigin: true
       }
     },
@@ -19,7 +19,9 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({
-        feConfig: path.resolve('.', './src/feConfig/' + (configEnv || 'development'))
+        feConfig: path.resolve('.', './src/feConfig/' + (configEnv || 'development')),
+        Util: path.resolve('.', './src/utils/util'),
+        Enums:path.resolve('.', './src/contants/enums')
       })
     ]
   }

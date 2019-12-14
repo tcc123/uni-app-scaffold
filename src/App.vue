@@ -43,7 +43,6 @@ button::after {
 .flex-row-start {
   display: flex;
   flex-direction: row;
-  justify-content: start;
   align-items: center;
 }
 .flex-col-center {

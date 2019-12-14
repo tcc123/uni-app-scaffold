@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
+		<image class="logo" src="/static/images/logo.png"></image>
 		<view>
 			<text class="title">{{ title }}</text>
 		</view>
@@ -15,46 +15,36 @@
 			};
 		},
 		onLoad() {
-			console.log(feConfig);
-			this.$http.request({
-				url: '/v1/users/sessions',
-				method: 'post',
-				data: {
-					username: 'muyi',
-          password: '123456'
-				}
-			}).then(res => {
-				console.log(res);
-				this.$http.request({
-				url: '/v1/homework/list',
-				method: 'get',
-				data: {
-					homeworkStatus: 1
-				}
-			}).then(res => {
-				console.log(res);
-			});
-			}).catch(err => {
-				console.log(err);
+			// 请求示例
+			let url = '/demo/hello';
+			this.$http.request({url, method: 'get', data: {}}).then(res => {
+				this.title = res.msg;
+				uni.setStorageSync('token', res.data.token);
+				uni.showToast({
+					title: res.msg,
+					icon: 'none',
+					duration: 2000
+				});
 			});
 		},
-		methods: {
-
-		}
+		methods: {}
 	};
 </script>
 
 <style lang="scss">
 	.content {
-		text-align: center;
-		height: 400upx;
-		background: $uni-color-primary;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		.logo {
-			height: 200upx;
-			width: 200upx;
+			height: 200rpx;
+			width: 200rpx;
+			margin-bottom: 30rpx;
 		}
 		.title {
-			font-size: 36upx;
+			font-size: 36rpx;
 			color: #8f8f94;
 		}
 	}

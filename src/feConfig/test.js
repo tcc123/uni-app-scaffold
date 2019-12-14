@@ -1,6 +1,6 @@
 module.exports = {
   api: {
-    base: 'https://testhfsfd-teacher.haofenshu.com'
+    base: 'http://yapi.iyunxiao.com/mock/451'
   },
   token: '',
   appid: '',
