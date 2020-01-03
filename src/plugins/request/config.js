@@ -34,7 +34,7 @@ export const config = {
  */
 globalInterceptor.request.use(
   config => {
-    uni.showLoading({ title: '加载中' });
+    uni.showLoading({ title: '加载中', mask: true });
     getToken() && (config.header.token = getToken());
     getCookie() && (config.header.cookie = getCookie());
     return config;
@@ -71,8 +71,7 @@ globalInterceptor.response.use(
     }
   },
   (err) => {
-    showToast(err);
-    uni.hideLoading();
+    showToast(err.msg || err.Msg || err);
     return Promise.reject(err);
   }
 );
