@@ -16,6 +16,7 @@ module.exports = {
   globals: {
     Vue: true,
     uni: true,
+    getApp: true,
     feConfig: true,
     Util: true,
     Enums: true
